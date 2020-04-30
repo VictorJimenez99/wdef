@@ -9,7 +9,7 @@ The name is an acronym of "word definition".
 It can be installed with the command [sudo make install], and as such it can be removed with the command
 [sudo make remove].
 
-##How to use wdef
+## How to use wdef
 
 wdef @\[folder_name] #\[section(optional)] word
 
