@@ -11,7 +11,7 @@ It can be installed with the command [sudo make install], and as such it can be 
 
 ## How to use wdef
 
-wdef @\[folder_name] #\[section(optional)] word
+wdef @\[folder_name] -\[section(optional)] word
 
 e.g.
 \$ wdef @technology @animals #brief mouse
@@ -21,9 +21,13 @@ result:
 Mouse:
 
 Technology
+
 \#brief
+
 A mouse is a pointing device for a computer.
 
 Animals
+
 \#brief
+
 A type of rodent.
