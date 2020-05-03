@@ -6,22 +6,15 @@
 
 int main(int argc, char *argv[])
 {
-    printf("argc: %d", argc);
+    printf("argc: %d\n", argc);
     fflush(stdout);
     int folder_counter = 0;
     int word_counter = 0;
     int section_counter = 0;
 
-    for (int i = argc - 1; i != 0; i--)
-    {
-        if (argv[i][0] == '@')
-            folder_counter++;
-        else if (argv[i][0] == '-')
-            section_counter++;
-        else
-            word_counter++;
-    }
-    printf("counter %d", word_counter);
+    count_arguments(&folder_counter, &word_counter, &section_counter, argc, argv);
+
+    printf("word_counter: %d\nfolder_counter: %d\nsection_counter: %d\n", word_counter, folder_counter, section_counter);
     fflush(stdout);
     char **words = (char **)malloc(sizeof(char *) * word_counter);
     if (words == NULL)
@@ -46,7 +39,7 @@ int main(int argc, char *argv[])
 
     printf("%d", folder_counter);
     printf("word definition");
-    FILE *definition = find_file("es", "a");
+    FILE *definition = find_file("mineriaDeDatos", "tratamientoDeDatos");
     print_file(definition);
     fclose(definition);
     if (free2d_array(words, word_counter) != 0)
