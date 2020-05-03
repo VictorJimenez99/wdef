@@ -14,7 +14,7 @@ It can be installed with the command [sudo make install], and as such it can be 
 wdef @\[folder_name] -\[section(optional)] word
 
 e.g.
-\$ wdef @technology @animals #brief mouse
+\$ wdef @technology @animals -brief mouse
 
 result:
 
