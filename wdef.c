@@ -19,16 +19,15 @@ int main(int argc, char *argv[])
     char **folders = create2d_array(folder_counter, 30);
     char **sections = create2d_array(section_counter, 30);
 
-    char option = create_flag(folder_counter, word_counter, section_counter);
-
     gather_args(folders, folder_counter, argv, 0);
     gather_args(words, word_counter, argv, 1);
     gather_args(sections, section_counter, argv, 2);
-    print2d_array(folders, folder_counter);
-    print2d_array(words, word_counter);
-    print2d_array(sections, section_counter);
+    //print2d_array(folders, folder_counter);
+    //print2d_array(words, word_counter);
+    //print2d_array(sections, section_counter);
 
-    printf("what needs to be done: %d\n", option);
+    char option = create_flag(folder_counter, word_counter, section_counter);
+    printf("Q:What needs to be done?\nA: %d\n", option);
     /**
      * 0-NoArguments    1-FolderArgument    2-WordArgument  3-Folder&WordArguments
      * 4-SecctionArg    5-Seccion&Folder    6-Section&Word  7-Section&Word&Folder
@@ -42,6 +41,7 @@ int main(int argc, char *argv[])
          *  seach in every folder
          *   print matches
         */
+
         break;
     case 3:
         /**
@@ -49,6 +49,20 @@ int main(int argc, char *argv[])
          *  for each file
          *   printfile
         */
+        for (register int i = 0; i != folder_counter; i++)
+            for (register int j = 0; j != word_counter; j++)
+            {
+                FILE *definition = find_file(folders[i], words[j]);
+                if (definition == NULL)
+                    printf("the program couldn't find: %s inside: %s\n", words[j], folders[i]);
+                else
+                {
+                    printf("\nFILE: %s\nFOLDER: %s\n\n\n", words[j], folders[i]);
+                    print_file(definition);
+                    fclose(definition);
+                }
+            }
+
         break;
     case 7:
         /**
@@ -56,11 +70,13 @@ int main(int argc, char *argv[])
          *  for each file
          *   print section
         */
+
         break;
     default:
-        printf("NOT ENOUGH ARGUMENTS\ntry $wdef @[folder_name] -[section(optional)] [word]\n");
+        printf("NOT ENOUGH ARGUMENTS\ntry:\n $wdef @[folder_name] -[section(optional)] [word]\n");
         break;
     }
+    //create_path("test");
     //FILE *definition; // = find_file("mineriaDeDatos", "tratamientoDeDatos");
     //print_file(definition);
     //fclose(definition);
