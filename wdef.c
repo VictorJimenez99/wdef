@@ -70,6 +70,24 @@ int main(int argc, char *argv[])
          *  for each file
          *   print section
         */
+        printf("case 7");
+        for (register int i = 0; i != folder_counter; i++)
+            for (register int j = 0; j != word_counter; j++)
+            {
+                FILE *definition = find_file(folders[i], words[j]);
+                if (definition == NULL)
+                    printf("the program couldn't find: %s inside: %s\n", words[j], folders[i]);
+                else
+                {
+                    printf("\nFILE: %s\nFOLDER: %s\n\n\n", words[j], folders[i]);
+                    for (register int k = 0; k != section_counter; k++)
+                    {
+                        fseek(definition, 0, SEEK_SET);
+                        print_section(definition, sections[k]);
+                    }
+                    fclose(definition);
+                }
+            }
 
         break;
     default:

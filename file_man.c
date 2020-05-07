@@ -69,3 +69,48 @@ int file_exists(char *file, char *folder)
     free(path);
     return 1;
 }
+
+void print_section(FILE *file, char *section)
+{
+    //printf("section:::::%s\n", section);
+    section[strlen(section)] = '\n';
+    section[strlen(section)] = '\0';
+    int found_match = 0;
+    char line[1024];
+    while (1)
+    {
+        if (fgets(line, 1024, file) == NULL)
+        {
+            section[strlen(section) - 1] = '\0';
+            //printf("end of func:%s\n", section);
+            if (!found_match)
+            {
+                printf("PROGRAM:Couldn't find word inside current FILE:\"%s\"\n", section);
+            }
+            return;
+        }
+        if (line[0] == '#')
+        {
+            if (strcmp(section, line + 2) == 0)
+            {
+                //found a match
+                //print this section
+                found_match = 1;
+                printf("%s", line);
+                char c;
+
+                while (1)
+                {
+                    c = getc(file);
+                    if (c == EOF || c == '#')
+                    {
+                        fseek(file, -1, SEEK_CUR);
+                        break;
+                    }
+
+                    printf("%c", c);
+                }
+            }
+        }
+    }
+}
