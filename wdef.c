@@ -27,7 +27,7 @@ int main(int argc, char *argv[])
     //print2d_array(sections, section_counter);
 
     char option = create_flag(folder_counter, word_counter, section_counter);
-    printf("Q:What needs to be done?\nA: %d\n", option);
+    //printf("Q:What needs to be done?\nA: %d\n", option);
     /**
      * 0-NoArguments    1-FolderArgument    2-WordArgument  3-Folder&WordArguments
      * 4-SecctionArg    5-Seccion&Folder    6-Section&Word  7-Section&Word&Folder
@@ -70,16 +70,16 @@ int main(int argc, char *argv[])
          *  for each file
          *   print section
         */
-        printf("case 7");
+        //printf("case 7");
         for (register int i = 0; i != folder_counter; i++)
             for (register int j = 0; j != word_counter; j++)
             {
                 FILE *definition = find_file(folders[i], words[j]);
                 if (definition == NULL)
-                    printf("the program couldn't find: %s inside: %s\n", words[j], folders[i]);
+                    printf("The program couldn't find: %s inside: %s\n", words[j], folders[i]);
                 else
                 {
-                    printf("\nFILE: %s\nFOLDER: %s\n\n\n", words[j], folders[i]);
+                    printf("\nFOLDER: %s\nFILE: %s\n\n\n", folders[i], words[j]);
                     for (register int k = 0; k != section_counter; k++)
                     {
                         fseek(definition, 0, SEEK_SET);
@@ -149,7 +149,7 @@ void gather_args(char **array, int counter, char **argv, int option)
     if (option == 1)
     {
         //word
-        printf("gathering words\n");
+        //printf("gathering words\n");
         fflush(stdout);
         while (counter != 0)
         {
@@ -166,7 +166,7 @@ void gather_args(char **array, int counter, char **argv, int option)
     else
     {
         //folder or section
-        printf("gathering data\n");
+        //printf("gathering data\n");
         fflush(stdout);
         char ch;
         if (option == 0)

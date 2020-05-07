@@ -8,6 +8,7 @@ void print_file(FILE *definition);
 FILE *find_file(char *folder, char *name);
 char *create_path(char *folder);
 int file_exists(char *file, char *folder);
+void print_section(FILE *file, char *section);
 
 void print_file(FILE *definition)
 {
