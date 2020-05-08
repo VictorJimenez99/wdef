@@ -9,6 +9,8 @@ FILE *find_file(char *folder, char *name);
 char *create_path(char *folder);
 int file_exists(char *file, char *folder);
 void print_section(FILE *file, char *section);
+int search_every_folder(char *file);
+void print_folder_content(char *folder);
 
 void print_file(FILE *definition)
 {
@@ -49,7 +51,7 @@ char *create_path(char *folder)
     strcpy(path, SEARCH_DIR);
     strcat(path, folder);
     strcat(path, "/");
-    printf("%s", path);
+    //printf("%s", path);
     fflush(stdout);
     return path;
 }
@@ -86,7 +88,16 @@ void print_section(FILE *file, char *section)
             //printf("end of func:%s\n", section);
             if (!found_match)
             {
-                printf("PROGRAM:Couldn't find word inside current FILE:\"%s\"\n", section);
+                printf("PROGRAM:Couldn't find SECTION inside current FILE:\"%s\"\nTry any of the following:\n\n", section);
+                fseek(file, 0, SEEK_SET);
+                while (1)
+                {
+                    if (fgets(line, 1024, file) == NULL)
+                        break;
+                    if (line[0] == '#')
+                        printf("%s", line);
+                }
+                printf("\n\n\n");
             }
             return;
         }
@@ -114,4 +125,75 @@ void print_section(FILE *file, char *section)
             }
         }
     }
+}
+
+int search_every_folder(char *file)
+{
+    int retval = 0;
+    DIR *root_folder = opendir(SEARCH_DIR);
+    struct dirent *subf;
+
+    if (root_folder == 0)
+    {
+        printf("The program couldn't locate the root folder for wdef");
+        return 0;
+    }
+    while ((subf = readdir(root_folder)) != NULL)
+    {
+        if (strcmp(subf->d_name, ".") == 0 || strcmp(subf->d_name, "..") == 0)
+            continue;
+
+        char *aux = create_path(subf->d_name);
+
+        char first_letter[2];
+        first_letter[0] = file[0];
+        first_letter[1] = '\0';
+        strcat(aux, first_letter);
+        strcat(aux, "/");
+        strcat(aux, file);
+        //printf("search:%s\n", aux);
+        FILE *f = fopen(aux, "r");
+
+        if (f == NULL)
+        {
+            free(aux);
+            retval |= 0;
+            continue;
+        }
+
+        fclose(f);
+        printf("\nfound a match for: \"%s\" at: %s folder\ntry:\nwdef @%s %s\n\n", file, subf->d_name, subf->d_name, file);
+        retval |= 1;
+
+        free(aux);
+
+        //printf("%s\n", subf->d_name);
+    }
+
+    closedir(root_folder);
+    //printf("inside:%d\n", retval);
+    return retval;
+}
+
+void print_folder_content(char *folder)
+{
+    char *folderp = create_path(folder);
+    DIR *root_folder = opendir(folderp);
+    struct dirent *subf;
+
+    if (root_folder == 0)
+    {
+        printf("The specified folder doesn't exist");
+        return;
+    }
+    while ((subf = readdir(root_folder)) != NULL)
+    {
+        if (strcmp(subf->d_name, ".") == 0 || strcmp(subf->d_name, "..") == 0)
+            continue;
+        printf("%s\n", subf->d_name);
+    }
+
+    closedir(root_folder);
+    free(folderp);
+    //printf("inside:%d\n", retval);
 }

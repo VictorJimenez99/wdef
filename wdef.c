@@ -33,14 +33,32 @@ int main(int argc, char *argv[])
      * 4-SecctionArg    5-Seccion&Folder    6-Section&Word  7-Section&Word&Folder
      * 
      * */
+    int found = 0;
     switch (option)
     {
+    case 1:
+        for (int i = 0; i != folder_counter; i++)
+        {
+            printf("FOLDER: %s\n", folders[i]);
+            print_folder_content(folders[i]);
+        }
+        break;
     case 2:
         /**
          * for each word
          *  seach in every folder
          *   print matches
         */
+
+        for (int i = 0; i != word_counter; i++)
+        {
+            found += search_every_folder(words[i]);
+            //printf("%d\n", found);
+            if (!found)
+            {
+                printf("\"%s\" doesn't exist in the wdef folder\n", words[i]);
+            }
+        }
 
         break;
     case 3:
