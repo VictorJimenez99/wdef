@@ -7,6 +7,7 @@
 int create_flag(int folder_counter, int word_counter, int section_counter);
 void gather_args(char **array, int counter, char **argv, int option);
 void print2d_array(char **array, int counter);
+void security(char *word);
 
 int main(int argc, char *argv[])
 {
@@ -40,6 +41,7 @@ int main(int argc, char *argv[])
         for (int i = 0; i != folder_counter; i++)
         {
             printf("FOLDER: %s\n", folders[i]);
+            security(folders[i]);
             print_folder_content(folders[i]);
         }
         break;
@@ -52,6 +54,7 @@ int main(int argc, char *argv[])
 
         for (int i = 0; i != word_counter; i++)
         {
+            security(words[i]);
             found += search_every_folder(words[i]);
             //printf("%d\n", found);
             if (!found)
@@ -70,6 +73,8 @@ int main(int argc, char *argv[])
         for (register int i = 0; i != folder_counter; i++)
             for (register int j = 0; j != word_counter; j++)
             {
+                security(folders[i]);
+                security(words[j]);
                 FILE *definition = find_file(folders[i], words[j]);
                 if (definition == NULL)
                     printf("the program couldn't find: %s inside: %s\n", words[j], folders[i]);
@@ -214,5 +219,19 @@ void print2d_array(char **array, int counter)
     for (int i = 0; i != counter; i++)
     {
         printf("%s\n", array[i]);
+    }
+}
+
+void security(char *word)
+{
+    int size = strlen(word);
+    for (int i = 0; i != size; i++)
+    {
+        if (word[i] == '.')
+        {
+            perror("You're trying to look for something outside the wdef folder\n");
+            printf("\"%s\": INVALID ARGUMENT\n", word);
+            exit(EXIT_FAILURE);
+        }
     }
 }
