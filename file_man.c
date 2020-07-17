@@ -4,6 +4,8 @@
 #include "defs.h"
 #include <dirent.h>
 
+void create_search_path(char* user_name);
+
 void print_file(FILE *definition);
 FILE *find_file(char *folder, char *name);
 char *create_path(char *folder);
@@ -11,6 +13,12 @@ int file_exists(char *file, char *folder);
 void print_section(FILE *file, char *section);
 int search_every_folder(char *file);
 void print_folder_content(char *folder);
+
+void create_search_path(char* user_name)
+{
+	strcpy( SEARCH_DIR, user_name );
+	strcat(SEARCH_DIR, "/wdef/");
+}
 
 void print_file(FILE *definition)
 {

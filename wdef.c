@@ -9,8 +9,14 @@ void gather_args(char **array, int counter, char **argv, int option);
 void print2d_array(char **array, int counter);
 void security(char *word);
 
+extern char **environ;
+
 int main(int argc, char *argv[])
 {
+
+	char *usr_name = getenv("HOME");
+	create_search_path(usr_name);
+
     int folder_counter = 0;
     int word_counter = 0;
     int section_counter = 0;
