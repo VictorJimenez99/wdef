@@ -22,12 +22,12 @@ Mouse:
 
 Technology
 
-\#brief
+\# Brief
 
 A mouse is a pointing device for a computer.
 
 Animals
 
-\#brief
+\# Brief
 
 A type of rodent.

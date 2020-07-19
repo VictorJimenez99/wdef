@@ -103,6 +103,9 @@ int main(int argc, char *argv[])
         for (register int i = 0; i != folder_counter; i++)
             for (register int j = 0; j != word_counter; j++)
             {
+                security(folders[i]);
+                security(words[j]);
+
                 FILE *definition = find_file(folders[i], words[j]);
                 if (definition == NULL)
                     printf("The program couldn't find: %s inside: %s\n", words[j], folders[i]);
@@ -230,13 +233,14 @@ void print2d_array(char **array, int counter)
 
 void security(char *word)
 {
+	//printf("security: %s",word);
     int size = strlen(word);
     for (int i = 0; i != size; i++)
     {
         if (word[i] == '.')
         {
-            perror("You're trying to look for something outside the wdef folder\n");
-            printf("\"%s\": INVALID ARGUMENT\n", word);
+            perror("SECURITY\n");
+            printf("\"%s\": INVALID ARGUMENT(using . in the name of the folder)\n", word);
             exit(EXIT_FAILURE);
         }
     }
