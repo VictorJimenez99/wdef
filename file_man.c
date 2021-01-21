@@ -143,8 +143,10 @@ int search_every_folder(char *file)
 
     if (root_folder == 0)
     {
-        printf("The program couldn't locate the root folder for wdef");
-        return 0;
+        char ERR[351]; 
+        sprintf(ERR, "The program couldn't locate the root folder for wdef make sure you the folder: %s exists\n", SEARCH_DIR);
+        perror(ERR);
+        exit(EXIT_FAILURE);
     }
     while ((subf = readdir(root_folder)) != NULL)
     {
