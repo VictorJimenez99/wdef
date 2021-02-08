@@ -96,7 +96,7 @@ void print_section(FILE *file, char *section)
             //printf("end of func:%s\n", section);
             if (!found_match)
             {
-                printf("PROGRAM:Couldn't find SECTION inside current FILE:\"%s\"\nTry any of the following:\n\n", section);
+                printf("PROGRAM:Couldn't find SECTION:\"%s\" inside current FILE\nTry any of the following:\n\n", section);
                 fseek(file, 0, SEEK_SET);
                 while (1)
                 {
