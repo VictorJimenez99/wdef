@@ -4,20 +4,26 @@
 #include "defs.h"
 #include <dirent.h>
 
-void create_search_path(char* user_name);
+void create_search_path(char *user_name);
 
 void print_file(FILE *definition);
+
 FILE *find_file(char *folder, char *name);
+
 char *create_path(char *folder);
+
 int file_exists(char *file, char *folder);
+
 void print_section(FILE *file, char *section);
+
 int search_every_folder(char *file);
+
 void print_folder_content(char *folder);
 
-void create_search_path(char* user_name)
+void create_search_path(char *user_name)
 {
-	strcpy( SEARCH_DIR, user_name );
-	strcat(SEARCH_DIR, "/wdef/");
+    strcpy(SEARCH_DIR, user_name);
+    strcat(SEARCH_DIR, "/wdef/");
 }
 
 void print_file(FILE *definition)
@@ -55,7 +61,7 @@ FILE *find_file(char *folder, char *name)
 
 char *create_path(char *folder)
 {
-    char *path = (char *)malloc(sizeof(char) * 100);
+    char *path = (char *) malloc(sizeof(char) * 100);
     strcpy(path, SEARCH_DIR);
     strcat(path, folder);
     strcat(path, "/");
@@ -63,6 +69,7 @@ char *create_path(char *folder)
     fflush(stdout);
     return path;
 }
+
 /**
  * if(1) the file exist inside the folder
  * if(0) the file doesnt exit insed the folder
@@ -96,7 +103,8 @@ void print_section(FILE *file, char *section)
             //printf("end of func:%s\n", section);
             if (!found_match)
             {
-                printf("PROGRAM:Couldn't find SECTION:\"%s\" inside current FILE\nTry any of the following:\n\n", section);
+                printf("PROGRAM:Couldn't find SECTION:\"%s\" inside current FILE\nTry any of the following:\n\n",
+                       section);
                 fseek(file, 0, SEEK_SET);
                 while (1)
                 {
@@ -143,8 +151,9 @@ int search_every_folder(char *file)
 
     if (root_folder == 0)
     {
-        char ERR[351]; 
-        sprintf(ERR, "The program couldn't locate the root folder for wdef make sure you the folder: %s exists\n", SEARCH_DIR);
+        char ERR[351];
+        sprintf(ERR, "The program couldn't locate the root folder for wdef make sure you the folder: %s exists\n",
+                SEARCH_DIR);
         perror(ERR);
         exit(EXIT_FAILURE);
     }
@@ -172,7 +181,8 @@ int search_every_folder(char *file)
         }
 
         fclose(f);
-        printf("\nfound a match for: \"%s\" at: %s folder\ntry:\nwdef @%s %s\n\n", file, subf->d_name, subf->d_name, file);
+        printf("\nfound a match for: \"%s\" at: %s folder\ntry:\nwdef @%s %s\n\n", file, subf->d_name, subf->d_name,
+               file);
         retval |= 1;
 
         free(aux);
@@ -202,10 +212,12 @@ void print_folder_content(char *folder)
             continue;
         printf("%s\n", sub_f->d_name);
         //sub_f->d_name is declared as char[256];
+        /*TODO: even though these lines work there should probably be a function that doesnt fail at the beginning
+         * in this case the recursive call to print_folder_content fails at DIR *root_folder = opendir(folder_path)
+         */
         char sub_folder_name[512];
         sprintf(sub_folder_name, "%s/%s", folder, sub_f->d_name);
         //printf("%s\n", sub_folder_name);
-
         print_folder_content(sub_folder_name);
     }
 
