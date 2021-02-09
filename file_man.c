@@ -187,23 +187,28 @@ int search_every_folder(char *file)
 
 void print_folder_content(char *folder)
 {
-    char *folderp = create_path(folder);
-    DIR *root_folder = opendir(folderp);
-    struct dirent *subf;
+    char *folder_path = create_path(folder);
+    DIR *root_folder = opendir(folder_path);
+    struct dirent *sub_f;
 
     if (root_folder == 0)
     {
-        printf("The specified folder doesn't exist");
+        //printf("The specified folder doesn't exist\n");
         return;
     }
-    while ((subf = readdir(root_folder)) != NULL)
+    while ((sub_f = readdir(root_folder)) != NULL)
     {
-        if (strcmp(subf->d_name, ".") == 0 || strcmp(subf->d_name, "..") == 0)
+        if (strcmp(sub_f->d_name, ".") == 0 || strcmp(sub_f->d_name, "..") == 0)
             continue;
-        printf("%s\n", subf->d_name);
+        printf("%s\n", sub_f->d_name);
+        //sub_f->d_name is declared as char[256];
+        char sub_folder_name[512];
+        sprintf(sub_folder_name, "%s/%s", folder, sub_f->d_name);
+        //printf("%s\n", sub_folder_name);
+
+        print_folder_content(sub_folder_name);
     }
 
     closedir(root_folder);
-    free(folderp);
-    //printf("inside:%d\n", retval);
+    free(folder_path);
 }
