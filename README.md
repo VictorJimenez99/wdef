@@ -11,23 +11,31 @@ It can be installed with the command [sudo make install], and as such it can be 
 
 ## How to use wdef
 
-wdef @\[folder_name] -\[section(optional)] word
+wdef @\[folder\_name] -\[section(optional)] word
 
 e.g.
-\$ wdef @technology @animals -brief mouse
 
-result:
+wdef @en flabby tinker foyer
 
-Mouse:
+FILE: foyer
+FOLDER: en
 
-Technology
 
-\# Brief
+    Noun: Entrance Hallway
+    -Since i had nowhere to sit, i decided to wait for her at the foyer
 
-A mouse is a pointing device for a computer.
+FILE: tinker
+FOLDER: en
 
-Animals
 
-\# Brief
+    Verb: to experiment with something without having the propper skills to do it.
+    -Do not tinker with the experiment.
 
-A type of rodent.
+
+FILE: flabby
+FOLDER: en
+
+
+    Adjetive: Soft and loose. Lack of strenght. Lanck of meaning.
+    "A flabby conclusion"
+
